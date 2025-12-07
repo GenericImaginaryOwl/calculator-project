@@ -1,0 +1,60 @@
+body, button, div {
+    display: flex;
+    flex: 1;
+}
+
+button {
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    border: 0px solid gray;
+}
+
+button:active {
+    box-shadow: 0px 0px 5px 1px inset gray;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+button, .display {
+    font-family: inherit;
+    box-shadow: 0px 0px 3px 1px inset gray;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.calculator-container {
+    padding: 10px;
+    flex-direction: column;
+    height: 75%;
+    max-width: 35%;
+    box-shadow: 5px 5px 10px 5px gray;
+}
+
+.display {
+    padding: 0 4%;
+    justify-content: end;
+    align-items: center;
+}
+
+.keypad-container {
+    flex: 5;
+}
+
+.keypad-left {
+    flex: 3;
+    flex-direction: column;
+}
+
+.keypad-right {
+    flex-direction: column;
+}
+
+.add {
+    flex: 2;
+}
