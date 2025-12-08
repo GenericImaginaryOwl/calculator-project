@@ -1,6 +1,34 @@
-let operandA = null;
-let operandB = null;
-let operator = null;
+let operandA = "";
+let operandB = "";
+let operator = "";
+let result = "";
+const keypad = document.querySelector(".keypad-container");
+const display = document.querySelector(".display");
+
+const DIVISION_SIGN = "\u{00F7}";
+const MULTIPLICATION_SIGN = "\u{00D7}";
+
+const keyLookup = {
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9,
+    "zero": 0,
+    "add": "+",
+    "subtract": "-",
+    "multiply": MULTIPLICATION_SIGN,
+    "divide": DIVISION_SIGN,
+    "percent": "%",
+    "dot": ".",
+    "clear": "c",
+    "all-clear": "ac",
+    "equals": "=",
+}
 
 function add(a, b) {
     return +a + +b;
@@ -23,7 +51,6 @@ function divide(a, b) {
 }
 
 function operate() {
-    let result = null;
     switch (operator){
         case "+":
             result = add(operandA, operandB);
@@ -31,16 +58,43 @@ function operate() {
         case "-":
             result = subtract(operandA, operandB);
             break;
-        case "*":
+        case MULTIPLICATION_SIGN:
             result = multiply(operandA, operandB);
             break;
-        case "/":
+        case DIVISION_SIGN:
             result = divide(operandA, operandB);
             break;
     }
-    if (result !== null) {
-        console.log(result);
-    }else{
+    if (result === "") {
         console.log("Something went wrong when performing the operation.");
     }
 }
+
+function getInput(event) {
+    if (event.target.className == "key") {
+        const key = keyLookup[event.target.id];
+        if (typeof key == 'number') {
+            if (operator == ""){
+                operandA += key;
+            }else{
+                operandB +=key;
+            }
+        }else if (key == "+" || key == "-" || key == MULTIPLICATION_SIGN || key == DIVISION_SIGN) {
+            operator = key;
+        }else if (key == "=") {
+            operate();
+        }else if (key == "ac"){
+            operandA = "";
+            operandB = "";
+            operator = "";
+            result = ""; 
+        }
+    }
+    if (result === "") {
+        display.textContent = operandA + operator + operandB;
+    }else{
+        display.textContent = operandA + operator + operandB + "=" + result;
+    }
+}
+
+keypad.addEventListener("click", getInput);
