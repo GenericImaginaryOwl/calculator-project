@@ -37,6 +37,7 @@ button, .display {
 }
 
 .display {
+    overflow-wrap: anywhere;
     padding: 0 4%;
     justify-content: end;
     align-items: center;
