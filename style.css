@@ -55,6 +55,6 @@ button, .display {
     flex-direction: column;
 }
 
-.add {
+#add {
     flex: 2;
 }
