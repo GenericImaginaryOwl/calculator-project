@@ -2,6 +2,7 @@ let operandA = "";
 let operandB = "";
 let operator = "";
 let result = "";
+let errorState = false;
 const keypad = document.querySelector(".keypad-container");
 const display = document.querySelector(".display");
 
@@ -46,12 +47,14 @@ function divide(a, b) {
     if (+b !== 0){
         return Math.floor((a / b ) * 10 ** 10) / (10 ** 10);
     }else{
+        errorState = true;
         return "Cannot divide by zero";
     }
 }
 
 function operate() {
     if(operandA == "." || operandB == ".") {
+        errorState = true;
         return "Syntax error";
     }
     switch (operator){
@@ -78,10 +81,15 @@ function onNumpadClick(key) {
 }
 
 function onOperatorClick(key) {
-    if(operandB !== ""){
-        operandA = operate();
-        operandB = "";
-        result = "";
+    if(operandB !== "") {
+        result = operate();
+        if(errorState) {
+            return;
+        }else{
+            operandA = result;
+            operandB = "";
+            result = "";
+        }
     }
     operator = key;
 }
@@ -130,8 +138,9 @@ function displayResult(){
 
 function getInput(event) {
     if (event.target.className == "key") {
-        if (result == "Cannot divide by zero" || result == "Syntax error") {
+        if(errorState) {
             onAllClearClick();
+            errorState = false;
         }
         const key = keyLookup[event.target.id];
         if (typeof key == 'number') {
