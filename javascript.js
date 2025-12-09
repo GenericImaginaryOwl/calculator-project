@@ -81,6 +81,9 @@ function onNumpadClick(key) {
 }
 
 function onOperatorClick(key) {
+    if(operandA == "" && operandB == "" && key !== "-") {
+        return;
+    }
     if(operandB !== "") {
         result = operate();
         if(errorState) {
