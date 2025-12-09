@@ -71,7 +71,7 @@ function operate() {
 
 function onNumpadClick(key) {
     if (result !== "") {
-        onAllClearClick();
+        reset();
     }
     if (operator == ""){
         operandA += key;
@@ -113,7 +113,7 @@ function onResultClick() {
 
 function onClearClick() {
     if (result !== ""){
-        onAllClearClick();
+        reset();
     }
     if(operandB !== "") {
         operandB = operandB.substring(0, operandB.length - 1);
@@ -125,10 +125,14 @@ function onClearClick() {
 }
 
 function onAllClearClick() {
+    reset();
+}
+
+function reset() {
             operandA = "";
             operandB = "";
             operator = "";
-            result = ""; 
+            result = "";
 }
 
 function 
@@ -143,7 +147,7 @@ updateDisplay(){
 function handleKeypadInput(event) {
     if (event.target.className == "key") {
         if(errorState) {
-            onAllClearClick();
+            reset();
             errorState = false;
         }
         const key = keyLookup[event.target.id];
