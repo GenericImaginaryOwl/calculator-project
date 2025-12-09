@@ -67,6 +67,9 @@ function operate() {
 }
 
 function onNumpadClick(key) {
+    if (result !== "") {
+        onAllClearClick();
+    }
     if (operator == ""){
         operandA += key;
     }else{
