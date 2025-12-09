@@ -43,30 +43,74 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    if (b !== 0){
+    if (b !== "0"){
         return Math.floor((a / b ) * 10 ** 10) / (10 ** 10);
     }else{
-        return "Cannot divide by zero.";
+        return "Cannot divide by zero";
     }
 }
 
 function operate() {
     switch (operator){
         case "+":
-            result = add(operandA, operandB);
-            break;           
+            return add(operandA, operandB).toString(); 
         case "-":
-            result = subtract(operandA, operandB);
-            break;
+            return subtract(operandA, operandB).toString();
         case MULTIPLICATION_SIGN:
-            result = multiply(operandA, operandB);
-            break;
+            return multiply(operandA, operandB).toString();
         case DIVISION_SIGN:
-            result = divide(operandA, operandB);
-            break;
+            return divide(operandA, operandB).toString();
     }
+}
+
+function onNumpadClick(key) {
+    if (operator == ""){
+        operandA += key;
+    }else{
+        operandB += key;
+    }
+}
+
+function onOperatorClick(key) {
+    if(operandB !== ""){
+        operandA = operate();
+        operandB = "";
+        result = "";
+    }
+    operator = key;
+}
+
+function onResultClick() {
+    if(operandA !== "" && operator !== "" && operandB !== "") {
+        result = operate();
+    }
+}
+
+function onClearClick() {
+    if (result !== ""){
+        onAllClearClick();
+    }
+    if(operandB !== "") {
+        operandB = operandB.substring(0, operandB.length - 1);
+    }else if(operator !== "") {
+        operator = "";
+    }else if(operandA !== "") {
+        operandA = operandA.substring(0, operandA.length -1);
+    }
+}
+
+function onAllClearClick() {
+            operandA = "";
+            operandB = "";
+            operator = "";
+            result = ""; 
+}
+
+function displayResult(){
     if (result === "") {
-        console.log("Something went wrong when performing the operation.");
+        display.textContent = `${operandA} ${operator} ${operandB}`;
+    }else{
+        display.textContent = result;
     }
 }
 
@@ -74,27 +118,19 @@ function getInput(event) {
     if (event.target.className == "key") {
         const key = keyLookup[event.target.id];
         if (typeof key == 'number') {
-            if (operator == ""){
-                operandA += key;
-            }else{
-                operandB +=key;
-            }
-        }else if (key == "+" || key == "-" || key == MULTIPLICATION_SIGN || key == DIVISION_SIGN) {
-            operator = key;
+            onNumpadClick(key);
+        }else if (key == "+" || key == "-" || 
+                  key == MULTIPLICATION_SIGN || key == DIVISION_SIGN) {
+            onOperatorClick(key);
         }else if (key == "=") {
-            operate();
-        }else if (key == "ac"){
-            operandA = "";
-            operandB = "";
-            operator = "";
-            result = ""; 
+            onResultClick();
+        }else if (key == "c") {
+            onClearClick();
+        }else if (key == "ac") {
+            onAllClearClick();
         }
     }
-    if (result === "") {
-        display.textContent = operandA + operator + operandB;
-    }else{
-        display.textContent = operandA + operator + operandB + "=" + result;
-    }
+    displayResult();
 }
 
 keypad.addEventListener("click", getInput);
