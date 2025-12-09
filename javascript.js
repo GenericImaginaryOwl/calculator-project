@@ -43,7 +43,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    if (b !== "0"){
+    if (+b !== 0){
         return Math.floor((a / b ) * 10 ** 10) / (10 ** 10);
     }else{
         return "Cannot divide by zero";
