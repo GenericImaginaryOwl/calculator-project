@@ -51,6 +51,9 @@ function divide(a, b) {
 }
 
 function operate() {
+    if(operandA == "." || operandB == ".") {
+        return "Syntax error";
+    }
     switch (operator){
         case "+":
             return add(operandA, operandB).toString(); 
@@ -78,6 +81,14 @@ function onOperatorClick(key) {
         result = "";
     }
     operator = key;
+}
+
+function onDotClick() {
+    if (operator == "" && !operandA.includes(".")){
+        operandA += ".";
+    }else if (operator !== "" && !operandB.includes(".")) {
+        operandB += ".";
+    }
 }
 
 function onResultClick() {
@@ -116,12 +127,17 @@ function displayResult(){
 
 function getInput(event) {
     if (event.target.className == "key") {
+        if (result == "Cannot divide by zero" || result == "Syntax error") {
+            onAllClearClick();
+        }
         const key = keyLookup[event.target.id];
         if (typeof key == 'number') {
             onNumpadClick(key);
         }else if (key == "+" || key == "-" || 
                   key == MULTIPLICATION_SIGN || key == DIVISION_SIGN) {
             onOperatorClick(key);
+        }else if (key == ".") {
+            onDotClick();
         }else if (key == "=") {
             onResultClick();
         }else if (key == "c") {
