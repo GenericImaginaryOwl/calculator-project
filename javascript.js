@@ -131,7 +131,8 @@ function onAllClearClick() {
             result = ""; 
 }
 
-function displayResult(){
+function 
+updateDisplay(){
     if (result === "") {
         display.textContent = `${operandA} ${operator} ${operandB}`;
     }else{
@@ -139,7 +140,7 @@ function displayResult(){
     }
 }
 
-function getInput(event) {
+function handleKeypadInput(event) {
     if (event.target.className == "key") {
         if(errorState) {
             onAllClearClick();
@@ -161,7 +162,7 @@ function getInput(event) {
             onAllClearClick();
         }
     }
-    displayResult();
+    updateDisplay();
 }
 
-keypad.addEventListener("click", getInput);
+keypad.addEventListener("click", handleKeypadInput);
