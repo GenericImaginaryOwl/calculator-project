@@ -31,8 +31,10 @@ button, .display {
 .calculator-container {
     padding: 10px;
     flex-direction: column;
-    height: 75%;
-    max-width: 35%;
+    height: 80%;
+    min-height: min-content;
+    max-width: 500px;
+    min-width: min-content;
     box-shadow: 5px 5px 10px 5px gray;
 }
 
