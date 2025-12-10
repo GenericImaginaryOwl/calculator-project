@@ -15,7 +15,7 @@ button:active {
 }
 
 body {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: sans-serif;
     justify-content: center;
     align-items: center;
     height: 100vh;
