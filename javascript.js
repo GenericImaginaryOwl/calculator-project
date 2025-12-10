@@ -144,29 +144,32 @@ updateDisplay(){
     }
 }
 
-function handleKeypadInput(event) {
-    if (event.target.className == "key") {
-        if(errorState) {
-            reset();
-            errorState = false;
-        }
-        const key = keyLookup[event.target.id];
-        if (typeof key == 'number') {
-            onNumpadClick(key);
-        }else if (key == "+" || key == "-" || 
-                  key == MULTIPLICATION_SIGN || key == DIVISION_SIGN) {
-            onOperatorClick(key);
-        }else if (key == ".") {
-            onDotClick();
-        }else if (key == "=") {
-            onResultClick();
-        }else if (key == "c") {
-            onClearClick();
-        }else if (key == "ac") {
-            onAllClearClick();
-        }
+function processInput(key) {
+    if(errorState) {
+        reset();
+        errorState = false;
+    }
+    if (typeof key == 'number') {
+        onNumpadClick(key);
+    }else if (key == "+" || key == "-" ||
+                key == MULTIPLICATION_SIGN || key == DIVISION_SIGN) {
+        onOperatorClick(key);
+    }else if (key == ".") {
+        onDotClick();
+    }else if (key == "=") {
+        onResultClick();
+    }else if (key == "c") {
+        onClearClick();
+    }else if (key == "ac") {
+        onAllClearClick();
     }
     updateDisplay();
+}
+
+function handleKeypadInput(event) {
+    if (event.target.className == "key") {
+        processInput(keyLookup[event.target.id]);
+    }
 }
 
 keypad.addEventListener("click", handleKeypadInput);
