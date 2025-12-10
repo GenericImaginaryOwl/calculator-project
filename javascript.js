@@ -31,6 +31,30 @@ const keyLookup = {
     "equals": "=",
 }
 
+const keyboardLookup = {
+    "1": 1,
+    "2": 2,
+    "3": 3,
+    "4": 4,
+    "5": 5,
+    "6": 6,
+    "7": 7,
+    "8": 8,
+    "9": 9,
+    "0": 0,
+    "+": "+",
+    "-": "-",
+    "*": MULTIPLICATION_SIGN,
+    "/": DIVISION_SIGN,
+    "%": "%",
+    ".": ".",
+    "Backspace": "c",
+    "c": "c",
+    "r": "ac",
+    "Enter": "=",
+    "=": "=",
+}
+
 function add(a, b) {
     return +a + +b;
 }
@@ -172,4 +196,12 @@ function handleKeypadInput(event) {
     }
 }
 
+function handleKeyboardInput(event) {
+    event.preventDefault();
+    if(Object.keys(keyboardLookup).includes(event.key)) {
+        processInput(keyboardLookup[event.key]);
+    }
+}
+
 keypad.addEventListener("click", handleKeypadInput);
+document.addEventListener("keydown", handleKeyboardInput);
